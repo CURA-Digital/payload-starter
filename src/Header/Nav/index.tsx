@@ -38,11 +38,38 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
                 <div className="absolute top-full left-0 pt-2 z-50">
                   <div className="bg-white border border-gray-200 rounded-md shadow-lg min-w-48">
                     <div className="py-2">
-                      {subItems.map(({ link: subLink }, subIndex) => (
-                        <div key={subIndex} className="px-4 py-2 hover:bg-gray-50">
-                          <CMSLink {...subLink} appearance="link" />
-                        </div>
-                      ))}
+                      {subItems.map(({ link: subLink, nestedSubItems }, subIndex) => {
+                        const hasNestedSubItems = nestedSubItems && nestedSubItems.length > 0
+
+                        if (hasNestedSubItems) {
+                          return (
+                            <div key={subIndex} className="relative group/nested">
+                              <div className="px-4 py-2 hover:bg-gray-50 cursor-pointer flex items-center justify-between">
+                                <CMSLink {...subLink} appearance="link" />
+                                <ChevronDown className="w-3 h-3 rotate-[-90deg]" />
+                              </div>
+
+                              <div className="absolute left-full top-0 opacity-0 invisible group-hover/nested:opacity-100 group-hover/nested:visible transition-all duration-200 z-50">
+                                <div className="bg-white border border-gray-200 rounded-md shadow-lg min-w-48">
+                                  <div className="py-2">
+                                    {nestedSubItems.map(({ link: nestedLink }, nestedIndex) => (
+                                      <div key={nestedIndex} className="px-4 py-2 hover:bg-gray-50">
+                                        <CMSLink {...nestedLink} appearance="link" />
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )
+                        }
+
+                        return (
+                          <div key={subIndex} className="px-4 py-2 hover:bg-gray-50">
+                            <CMSLink {...subLink} appearance="link" />
+                          </div>
+                        )
+                      })}
                     </div>
                   </div>
                 </div>

@@ -24,6 +24,20 @@ export const Header: GlobalConfig = {
             link({
               appearances: false,
             }),
+            {
+              name: 'nestedSubItems',
+              type: 'array',
+              label: 'Nested Sub Menu Items',
+              fields: [
+                link({
+                  appearances: false,
+                }),
+              ],
+              admin: {
+                initCollapsed: true,
+                description: 'Add nested sub menu items for a third level of navigation depth.',
+              },
+            },
           ],
           admin: {
             initCollapsed: true,

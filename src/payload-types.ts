@@ -1657,6 +1657,29 @@ export interface Header {
                 url?: string | null;
                 label: string;
               };
+              /**
+               * Add nested sub menu items for a third level of navigation depth.
+               */
+              nestedSubItems?:
+                | {
+                    link: {
+                      type?: ('reference' | 'custom') | null;
+                      newTab?: boolean | null;
+                      reference?:
+                        | ({
+                            relationTo: 'pages';
+                            value: number | Page;
+                          } | null)
+                        | ({
+                            relationTo: 'posts';
+                            value: number | Post;
+                          } | null);
+                      url?: string | null;
+                      label: string;
+                    };
+                    id?: string | null;
+                  }[]
+                | null;
               id?: string | null;
             }[]
           | null;
@@ -1723,6 +1746,20 @@ export interface HeaderSelect<T extends boolean = true> {
                     reference?: T;
                     url?: T;
                     label?: T;
+                  };
+              nestedSubItems?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                        };
+                    id?: T;
                   };
               id?: T;
             };
